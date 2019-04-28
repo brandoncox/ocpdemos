@@ -36,7 +36,7 @@ public class TestServlet extends HttpServlet {
 		builder.addServer().host(System.getenv("HOTROD_SERVICE"))
 				.port(Integer.parseInt(System.getenv("HOTROD_SERVICE_PORT")));
 		cacheManager = new RemoteCacheManager(builder.build());
-		cache = cacheManager.getCache("default");
+		cache = cacheManager.getCache(System.getenv("HOTROD_CACHE"));
 
 		System.out.println("Loaded Cache " + cache);
 	}
@@ -65,6 +65,7 @@ public class TestServlet extends HttpServlet {
 			player.setTeamName(teamName);
 			String randomId = UUID.randomUUID().toString();
                         out.println("Added Player"); 
+			System.out.println(cache);
 			cache.put(randomId, player);
 
 			out.println("Added Player: " + cache.get(randomId));
